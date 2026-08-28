@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momentum — Personal Productivity Dashboard</title>
+  <meta name="description" content="Momentum is a personal productivity dashboard for tasks, focus sessions, goals and notes." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Mobile top bar -->
+  <header class="mobile-bar">
+    <button class="icon-btn" id="menuToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="mobile-logo">
+      <span class="logo-mark" aria-hidden="true">M</span>
+      <span>Momentum</span>
+    </div>
+    <button class="icon-btn" id="themeToggleMobile" aria-label="Toggle dark mode">
+      <span id="themeIconMobile" aria-hidden="true">🌙</span>
+    </button>
+  </header>
+
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <span class="logo-mark" aria-hidden="true">M</span>
+        <div class="brand-text">
+          <strong>Momentum</strong>
+          <span>Productivity dashboard</span>
+        </div>
+      </div>
+
+      <ul class="nav-list" role="list">
+        <li>
+          <button class="nav-item is-active" data-section="dashboard" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+            <span>Dashboard</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-section="tasks" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h10M4 12h10M4 18h6" stroke-linecap="round"/><circle cx="19" cy="6" r="0" /><path d="M17 12l1.6 1.6L21.5 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Tasks</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-section="focus" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.2"/></svg>
+            <span>Focus</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-section="goals" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke-linecap="round"/><circle cx="12" cy="12" r="5.5"/></svg>
+            <span>Goals</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-section="notes" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h5" fill="none"/><path d="M8 12h8M8 16h5" stroke-linecap="round"/></svg>
+            <span>Notes</span>
+          </button>
+        </li>
+        <li>
+          <button class="nav-item" data-section="progress" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20V10M11 20V4M18 20v-7" stroke-linecap="round"/></svg>
+            <span>Progress</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="themeToggleDesktop" type="button" aria-label="Toggle dark mode">
+          <span id="themeIconDesktop" aria-hidden="true">🌙</span>
+          <span id="themeLabelDesktop">Dark mode</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="scrim" id="scrim"></div>
+
+    <!-- Main content -->
+    <main class="main" id="mainContent">
+
+      <!-- DASHBOARD -->
+      <section class="section is-active" id="section-dashboard" aria-labelledby="greetingText">
+        <header class="section-head">
+          <div>
+            <h1 id="greetingText" class="greeting">Good morning 👋</h1>
+            <p class="subtext">Let's make today productive.</p>
+          </div>
+          <div class="date-chip" id="dateChip">Loading date…</div>
+        </header>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue" aria-hidden="true">✅</div>
+            <div>
+              <p class="stat-value" id="statTasksCompleted">0</p>
+              <p class="stat-label">Tasks completed</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-amber" aria-hidden="true">🕓</div>
+            <div>
+              <p class="stat-value" id="statTasksPending">0</p>
+              <p class="stat-label">Pending tasks</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-violet" aria-hidden="true">⏱️</div>
+            <div>
+              <p class="stat-value" id="statFocusMinutes">0</p>
+              <p class="stat-label">Focus minutes</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-coral" aria-hidden="true">🔥</div>
+            <div>
+              <p class="stat-value" id="statStreak">0</p>
+              <p class="stat-label">Current streak</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-columns">
+          <div class="card progress-card">
+            <div class="card-head">
+              <h2>Today's progress</h2>
+              <span class="pill" id="todayProgressPill">0 / 0</span>
+            </div>
+            <div class="bar-track" role="progressbar" aria-label="Today's task progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="todayProgressBar">
+              <div class="bar-fill" id="todayProgressFill" style="width:0%"></div>
+            </div>
+            <p class="muted" id="todayProgressText">0% of today's tasks complete</p>
+          </div>
+
+          <div class="card points-card">
+            <div class="card-head">
+              <h2>Productivity points</h2>
+            </div>
+            <p class="points-value" id="pointsValue">0</p>
+            <p class="muted">Earned from tasks, focus sessions and goals</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Today's tasks</h2>
+            <button class="link-btn" data-goto="tasks" type="button">View all</button>
+          </div>
+          <ul class="mini-task-list" id="dashboardTaskList">
+            <!-- injected -->
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Quick actions</h2>
+          </div>
+          <div class="quick-actions">
+            <button class="quick-btn" id="qaAddTask" type="button">
+              <span aria-hidden="true">➕</span> Add task
+            </button>
+            <button class="quick-btn" id="qaStartFocus" type="button">
+              <span aria-hidden="true">⏱️</span> Start focus
+            </button>
+            <button class="quick-btn" id="qaAddGoal" type="button">
+              <span aria-hidden="true">🎯</span> Add goal
+            </button>
+            <button class="quick-btn" id="qaAddNote" type="button">
+              <span aria-hidden="true">📝</span> Add note
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TASKS -->
+      <section class="section" id="section-tasks" aria-labelledby="tasks-heading">
+        <header class="section-head">
+          <div>
+            <h1 id="tasks-heading">Tasks</h1>
+            <p class="subtext">Plan your day, one task at a time.</p>
+          </div>
+        </header>
+
+        <div class="card">
+          <form class="task-form" id="taskForm">
+            <div class="field grow">
+              <label for="taskInput">Task title</label>
+              <input type="text" id="taskInput" name="taskInput" placeholder="e.g. Review project documentation" autocomplete="off" required maxlength="120" />
+            </div>
+            <div class="field">
+              <label for="taskPriority">Priority</label>
+              <select id="taskPriority" name="taskPriority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add task</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Your tasks</h2>
+            <div class="filter-group" role="group" aria-label="Filter tasks">
+              <button class="filter-btn is-active" data-filter="all" type="button">All</button>
+              <button class="filter-btn" data-filter="pending" type="button">Pending</button>
+              <button class="filter-btn" data-filter="completed" type="button">Completed</button>
+            </div>
+          </div>
+          <ul class="task-list" id="taskList">
+            <!-- injected -->
+          </ul>
+          <p class="empty-state" id="taskEmptyState" hidden>No tasks yet. Add your first task and build momentum.</p>
+        </div>
+      </section>
+
+      <!-- FOCUS -->
+      <section class="section" id="section-focus" aria-labelledby="focus-heading">
+        <header class="section-head">
+          <div>
+            <h1 id="focus-heading">Focus timer</h1>
+            <p class="subtext">A simple Pomodoro-style timer to protect your attention.</p>
+          </div>
+        </header>
+
+        <div class="card focus-card">
+          <p class="focus-mode-label" id="focusModeLabel">Focus session</p>
+          <div class="timer-display" id="timerDisplay">25:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="timerStart" type="button">Start</button>
+            <button class="btn btn-secondary" id="timerPause" type="button" disabled>Pause</button>
+            <button class="btn btn-ghost" id="timerReset" type="button">Reset</button>
+          </div>
+          <div class="timer-meta">
+            <span id="timerSessionInfo">Focus: 25 min · Break: 5 min</span>
+          </div>
+        </div>
+
+        <div class="stat-grid two-col">
+          <div class="stat-card">
+            <div class="stat-icon icon-violet" aria-hidden="true">⏱️</div>
+            <div>
+              <p class="stat-value" id="focusSessionsCompleted">0</p>
+              <p class="stat-label">Focus sessions completed</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-blue" aria-hidden="true">🧠</div>
+            <div>
+              <p class="stat-value" id="focusTotalMinutes">0</p>
+              <p class="stat-label">Total focus minutes</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- GOALS -->
+      <section class="section" id="section-goals" aria-labelledby="goals-heading">
+        <header class="section-head">
+          <div>
+            <h1 id="goals-heading">Daily goals</h1>
+            <p class="subtext">Set a few meaningful goals for today.</p>
+          </div>
+        </header>
+
+        <div class="card">
+          <form class="task-form" id="goalForm">
+            <div class="field grow">
+              <label for="goalInput">Goal</label>
+              <input type="text" id="goalInput" name="goalInput" placeholder="e.g. Finish JavaScript practice" autocomplete="off" required maxlength="120" />
+            </div>
+            <button type="submit" class="btn btn-primary">Add goal</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Today's goals</h2>
+            <span class="pill" id="goalsProgressPill">0 / 0 completed</span>
+          </div>
+          <div class="bar-track" role="progressbar" aria-label="Goal progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="goalsProgressBar">
+            <div class="bar-fill" id="goalsProgressFill" style="width:0%"></div>
+          </div>
+          <ul class="task-list" id="goalList">
+            <!-- injected -->
+          </ul>
+          <p class="empty-state" id="goalEmptyState" hidden>No goals added for today.</p>
+        </div>
+      </section>
+
+      <!-- NOTES -->
+      <section class="section" id="section-notes" aria-labelledby="notes-heading">
+        <header class="section-head">
+          <div>
+            <h1 id="notes-heading">Notes</h1>
+            <p class="subtext">Quick thoughts, jotted down and saved.</p>
+          </div>
+        </header>
+
+        <div class="card">
+          <form class="note-form" id="noteForm">
+            <div class="field grow">
+              <label for="noteInput">New note</label>
+              <textarea id="noteInput" name="noteInput" rows="3" placeholder="Write a quick note…" maxlength="600" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save note</button>
+          </form>
+        </div>
+
+        <div class="notes-grid" id="notesGrid">
+          <!-- injected -->
+        </div>
+        <p class="empty-state" id="noteEmptyState" hidden>No notes yet.</p>
+      </section>
+
+      <!-- PROGRESS -->
+      <section class="section" id="section-progress" aria-labelledby="progress-heading">
+        <header class="section-head">
+          <div>
+            <h1 id="progress-heading">Progress</h1>
+            <p class="subtext">Your productivity, at a glance.</p>
+          </div>
+        </header>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-blue" aria-hidden="true">✅</div>
+            <div>
+              <p class="stat-value" id="progTasksCompleted">0</p>
+              <p class="stat-label">Total tasks completed</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-violet" aria-hidden="true">⏱️</div>
+            <div>
+              <p class="stat-value" id="progFocusSessions">0</p>
+              <p class="stat-label">Focus sessions</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-amber" aria-hidden="true">🧠</div>
+            <div>
+              <p class="stat-value" id="progFocusMinutes">0</p>
+              <p class="stat-label">Focus minutes</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-coral" aria-hidden="true">🔥</div>
+            <div>
+              <p class="stat-value" id="progStreak">0</p>
+              <p class="stat-label">Current streak</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Productivity points</h2>
+          </div>
+          <p class="points-value" id="progPointsValue">0</p>
+          <p class="muted" id="streakMessage">Start today to build your streak.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>This week</h2>
+          </div>
+          <div class="week-chart" id="weekChart" aria-label="Weekly productivity points chart">
+            <!-- injected -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Achievements</h2>
+          </div>
+          <div class="achievements-grid" id="achievementsGrid">
+            <!-- injected -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
