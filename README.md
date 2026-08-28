@@ -54,7 +54,7 @@ The project can also be opened directly in a browser by double-clicking `index.h
 
 ## Live Demo
 
-[Live Demo](YOUR_GITHUB_PAGES_URL)
+[Live Demo](https://mayank87pandey-netizen.github.io/2025-29_MayankPandey_25scs1003002626_3rdsem_2CSE15/)
 
 ## Screenshots
 
